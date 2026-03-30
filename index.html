@@ -59,7 +59,6 @@
         }
         .test-container { display: flex; flex: 1; overflow: hidden; background: white; }
         
-        /* Left Side: Full Text */
         .passage-pane {
             flex: 1;
             padding: 40px;
@@ -70,16 +69,12 @@
         }
         .passage-pane h2 { color: var(--sat-blue); border-bottom: 2px solid var(--sat-blue); padding-bottom: 10px; }
         
-        /* Right Side: Questions */
         .question-pane {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
             background-color: #fafafa;
         }
-        .q-block { display: none; }
-        .q-block.active { display: block; }
-        
         .options-list label {
             display: block;
             padding: 18px;
@@ -186,8 +181,7 @@
         </div>
 
         <div class="question-pane" id="q-pane">
-            <div id="question-content">
-                </div>
+            <div id="question-content"></div>
             <div id="feedback-box" class="feedback-area"></div>
         </div>
     </div>
@@ -213,10 +207,8 @@
         
         <div style="display: flex; justify-content: space-around; margin-top: 20px; font-size: 1.3rem;">
             <div>Score: <span id="final-score" style="color:var(--sat-blue); font-weight:bold;">0/9</span></div>
-            <div>Success Rate: <span id="final-percent" style="color:var(--correct-green); font-weight:bold;">0%</span></div>
+            <div>Percentage: <span id="final-percent" style="color:var(--correct-green); font-weight:bold;">0%</span></div>
         </div>
-        
-        <button class="action-btn" style="margin-top:40px;" onclick="location.reload()">Return to Home</button>
     </div>
 </div>
 
@@ -227,22 +219,21 @@
 
     const data = [
         {}, 
-        { q: "What is most likely the meaning of the white flag that appears as the group approaches the pit?", a: "C", r: "The text explicitly mentions the group was a 'Deputation' meant to show the Martians that humans were also 'intelligent' and peaceful.", opts: ["The humans are violently attacking.", "They are planting the flag to claim land.", "The men are showing they come in peace.", "It is a gift for the Martians."] },
-        { q: "Which inference about Ogilvy, Stent, and Henderson is best supported?", a: "B", r: "The narrator confirms later that these individuals were part of the 'attempt at communication' with the white flag.", opts: ["They are the narrator's best friends.", "They attempted to communicate with the Martians.", "They planned a secret ambush.", "They were hiding with the narrator."] },
-        { q: "Which of the following best describes the mood as the narrator watches the destruction?", a: "C", r: "As the Heat Ray strikes, the tone shifts from curiosity to horror, describing 'death leaping from man to man'.", opts: ["Curiosity", "Amazement", "Fear", "Calm"] },
-        { q: "What do the lines describing the narrator standing 'motionless and dazzled' reveal?", a: "A", r: "Despite being paralyzed by the sight, the text notes the ray 'passed and spared' him.", opts: ["The narrator surprisingly survives the attack.", "Everyone on earth has died.", "He is preparing a counter-attack.", "The Martians are peaceful."] },
-        { q: "What is most likely a central idea of the passage?", a: "A", r: "The text emphasizes the sense of impending doom and the narrator's instinctive 'mental conflict' and fear.", opts: ["Humans feel something bad is coming and distrust the Martians.", "The invasion caused humans to unite instantly.", "People are bored by the visitors.", "A peaceful summit was held in the pit."] },
-        { q: "Which sentence most strongly supports the idea of tension and fear?", a: "D", r: "The phrase 'scarcely a time for articulate conversation' underscores the paralyzing tension of the scene.", opts: ["The crowd far away seemed to grow.", "I saw them staggering and falling.", "There was no movement from the pit.", "It was scarcely a time for articulate conversation."] },
-        { q: "Regarding the narrator's state of mind, which is best supported?", a: "B", r: "He describes his mind as a 'battleground of fear and curiosity.'", opts: ["He finds the Martians beautiful.", "He is in awe and unsure if he should be afraid.", "He thinks the Martians have no brains.", "He wants to leave Earth with them."] },
-        { q: "Which statement supports the narrator's 'passionate longing' vs his fear?", a: "C", r: "The narrator admits he 'did not dare to go back' while simultaneously feeling a 'longing to peer into it'.", opts: ["I began walking in a big curve.", "Did you see a man in the pit?", "I did not dare to go back, but felt a longing to peer in.", "What ugly brutes!"] },
-        { q: "Identify the correct chronological order of these events:", a: "B", r: "The text follows this order: The crowds gather, green smoke puffs out, the heat ray kills the deputation, and the dome sinks back.", opts: ["Crowds approach -> Dome sinks -> Green smoke -> Fire", "Crowds approach -> Green smoke -> Fire -> Dome sinks", "Dome sinks -> Fire -> Green smoke -> Crowds", "Green smoke -> Fire -> Crowds -> Dome sinks"] }
+        { q: "What is most likely the meaning of the white flag that appears as the group approaches the pit?", a: "C", r: "The text explains the white flag was part of a 'Deputation' intended to signal that humans were peaceful.", opts: ["The humans are violently attacking.", "They are planting the flag to claim land.", "The men are showing they come in peace.", "It is a gift for the Martians."] },
+        { q: "Which inference about Ogilvy, Stent, and Henderson is best supported?", a: "B", r: "The narrator confirms later that these individuals were part of the 'attempt at communication'.", opts: ["They are the narrator's best friends.", "They attempted to communicate with the Martians.", "They planned a secret ambush.", "They were hiding with the narrator."] },
+        { q: "Which of the following best describes the mood as the narrator watches the destruction?", a: "C", r: "The tone shifts to visceral fear as 'death leaps from man to man'.", opts: ["Curiosity", "Amazement", "Fear", "Calm"] },
+        { q: "What do the lines describing the narrator standing 'motionless and dazzled' reveal?", a: "A", r: "Despite being paralyzed, the text notes the ray 'passed and spared' him.", opts: ["The narrator surprisingly survives the attack.", "Everyone on earth has died.", "He is preparing a counter-attack.", "The Martians are peaceful."] },
+        { q: "What is most likely a central idea of the passage?", a: "A", r: "The text emphasizes the sense of impending doom and instinctive distrust.", opts: ["Humans feel something bad is coming and distrust the Martians.", "The invasion caused humans to unite instantly.", "People are bored by the visitors.", "A peaceful summit was held."] },
+        { q: "Which sentence most strongly supports the idea of tension and fear?", a: "D", r: "The phrase 'scarcely a time for articulate conversation' underscores the paralyzing tension.", opts: ["The crowd far away seemed to grow.", "I saw them staggering and falling.", "There was no movement from the pit.", "It was scarcely a time for articulate conversation."] },
+        { q: "Regarding the narrator's state of mind, which is best supported?", a: "B", r: "He describes his mind as a 'battleground of fear and curiosity.'", opts: ["He finds the Martians beautiful.", "He is in awe and unsure if he should be afraid.", "He thinks the Martians have no brains.", "He wants to leave Earth."] },
+        { q: "Which statement supports the narrator's conflicting 'longing' and fear?", a: "C", r: "He admits he 'did not dare to go back' while feeling a 'longing to peer into it'.", opts: ["I began walking in a big curve.", "Did you see a man in the pit?", "I did not dare to go back, but felt a longing to peer in.", "What ugly brutes!"] },
+        { q: "Identify the correct chronological order of these events:", a: "B", r: "Crowds gather, green smoke puffs out, the heat ray kills the deputation, then the dome sinks.", opts: ["Crowds approach -> Dome sinks -> Green smoke -> Fire", "Crowds approach -> Green smoke -> Fire -> Dome sinks", "Dome sinks -> Fire -> Green smoke -> Crowds", "Green smoke -> Fire -> Crowds -> Dome sinks"] }
     ];
 
     function beginQuiz() {
         const name = document.getElementById('userName').value;
         const cls = document.getElementById('userClass').value;
-        if (!name || !cls) { alert("Please enter your name and class to proceed."); return; }
-        
+        if (!name || !cls) { alert("Please enter details."); return; }
         document.getElementById('student-info-display').innerText = `Student: ${name} | Class: ${cls}`;
         document.getElementById('screen-home').classList.remove('active');
         document.getElementById('screen-test').classList.add('active');
@@ -254,26 +245,22 @@
         const container = document.getElementById('question-content');
         let optionsHtml = qData.opts.map((o, i) => {
             const letter = String.fromCharCode(65 + i);
-            return `<label><input type="radio" name="answer" value="${letter}"> ${o}</label>`;
+            return `<label><input type="radio" name="answer" value="${letter}"> ${letter}. ${o}</label>`;
         }).join('');
-
         container.innerHTML = `<h3>Question ${currentIdx}</h3><p>${qData.q}</p><div class="options-list">${optionsHtml}</div>`;
         document.getElementById('q-counter').innerText = `Question ${currentIdx} of ${totalQuestions}`;
     }
 
     function handleSubmission() {
         const selected = document.querySelector('input[name="answer"]:checked');
-        if (!selected) { alert("Please select an option."); return; }
-
+        if (!selected) return;
         const qData = data[currentIdx];
         const isCorrect = selected.value === qData.a;
         if (isCorrect) userScore++;
-
         const fb = document.getElementById('feedback-box');
         fb.innerHTML = `<strong>${isCorrect ? '✓ Correct' : '✗ Incorrect'}</strong><br>${qData.r}`;
         fb.className = `feedback-area ${isCorrect ? 'fb-correct' : 'fb-incorrect'}`;
         fb.style.display = 'block';
-
         document.getElementById('submitBtn').style.display = 'none';
         document.getElementById('nextBtn').style.display = 'inline-block';
         document.querySelectorAll('input[name="answer"]').forEach(i => i.disabled = true);
@@ -294,17 +281,12 @@
     function finishQuiz() {
         document.getElementById('screen-test').classList.remove('active');
         document.getElementById('screen-results').classList.add('active');
-        
         document.getElementById('cert-name-text').innerText = document.getElementById('userName').value;
         document.getElementById('cert-class-text').innerText = document.getElementById('userClass').value;
-        
         const percentage = Math.round((userScore / totalQuestions) * 100);
         document.getElementById('final-score').innerText = `${userScore} / ${totalQuestions}`;
         document.getElementById('final-percent').innerText = `${percentage}%`;
-        
-        setTimeout(() => {
-            document.getElementById('progress-fill').style.width = percentage + "%";
-        }, 500);
+        setTimeout(() => { document.getElementById('progress-fill').style.width = percentage + "%"; }, 500);
     }
 </script>
 
