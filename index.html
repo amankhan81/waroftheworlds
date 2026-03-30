@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Practice: The War of the Worlds</title>
+    <style>
+        :root {
+            --sat-blue: #003366;
+            --sat-light-blue: #0071ad;
+            --bg-gray: #f3f4f6;
+            --correct-green: #2e7d32;
+            --incorrect-red: #d32f2f;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: var(--bg-gray);
+        }
+        header {
+            background-color: var(--sat-blue);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+        }
+        .passage-section {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            line-height: 1.7;
+        }
+        .question-section {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        
+        h2 { font-size: 1.2rem; margin-top: 0; }
+        p { color: #333; margin-bottom: 1.5rem; }
+        
+        .options label {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .options label:hover { background-color: #f0f7ff; }
+        .options input { margin-right: 10px; }
+
+        .rationale {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+            line-height: 1.5;
+        }
+        .rationale.feedback { background-color: #f0f7ff; border-left: 5px solid var(--sat-light-blue); color: #333; }
+
+        .results-card {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background: white;
+            padding: 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .nav-btn {
+            background-color: var(--sat-light-blue);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>Reading and Writing: Unit 6 Comprehensive Assessment</div>
+    <div id="q-tracker">Question 1 of 9</div>
+</header>
+
+<div class="container">
+    <div class="passage-section" id="passage-container">
+        <h2>Passage</h2>
+        <p><i>The following text is from H.G. Wells’s 1898 novel, "The War of the Worlds." [cite: 2]</i></p>
+        <p>After the glimpse I had had of the Martians emerging from the cylinder in which they had come to the earth from their planet, a kind of fascination paralysed my actions. [cite: 12] I remained standing knee-deep in the heather, staring at the mound that hid them. I was a battleground of fear and curiosity. [cite: 13, 14]</p>
+        <p>Suddenly there was a flash of light, and a quantity of luminous greenish smoke came out of the pit in three distinct puffs... [cite: 40] Beyond the pit stood the little wedge of people with the white flag at its apex, arrested by these phenomena... [cite: 43] This was the Deputation. There had been a hasty consultation, and since the Martians were evidently, in spite of their repulsive forms, intelligent creatures, it had been resolved to show them, by approaching them with signals, that we too were intelligent. [cite: 36]</p>
+        <p>Then slowly the hissing passed into a humming, into a long, loud, droning noise. [cite: 45] Slowly a humped shape rose out of the pit, and the ghost of a beam of light seemed to flicker out from it. [cite: 46] Forthwith flashes of actual flame, a bright glare leaping from one to another, sprang from the scattered group of men. [cite: 47] It was as if some invisible jet impinged upon them and flashed into white flame. [cite: 48]</p>
+    </div>
+
+    <div class="question-section">
+        <div id="screen-q1" class="screen active">
+            <p><b>Question 1</b></p>
+            <p>What is most likely the meaning of the white flag that appears as the group approaches the pit?</p>
+            <div class="options" id="options-q1">
+                <label><input type="radio" name="q1" value="A"> A. The humans are violently attacking the Martians.</label>
+                <label><input type="radio" name="q1" value="B"> B. The group of men are planting the flag in the ground to establish territory.</label>
+                <label><input type="radio" name="q1" value="C"> C. The men who are seeking out the Martians are showing that they come in peace.</label>
+                <label><input type="radio" name="q1" value="D"> D. It is a gift being given to the Martians.</label>
+            </div>
+            <div id="rat-q1" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q2" class="screen">
+            <p><b>Question 2</b></p>
+            <p>Which of these inferences about the characters Ogilvy, Stent, and Henderson is best supported by the text?</p>
+            <div class="options" id="options-q2">
+                <label><input type="radio" name="q2" value="A"> A. They are close friends with the narrator.</label>
+                <label><input type="radio" name="q2" value="B"> B. They attempted to communicate with the Martians.</label>
+                <label><input type="radio" name="q2" value="C"> C. They have plans to attack the Martians.</label>
+                <label><input type="radio" name="q2" value="D"> D. They were standing with the narrator and his neighbor as they stared.</label>
+            </div>
+            <div id="rat-q2" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q3" class="screen">
+            <p><b>Question 3</b></p>
+            <p>Which of the following best describes the mood as the narrator watches the destruction of the group with the white flag?</p>
+            <div class="options" id="options-q3">
+                <label><input type="radio" name="q3" value="A"> A. Curiosity</label>
+                <label><input type="radio" name="q3" value="B"> B. Amazement</label>
+                <label><input type="radio" name="q3" value="C"> C. Fear</label>
+                <label><input type="radio" name="q3" value="D"> D. Calm</label>
+            </div>
+            <div id="rat-q3" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q4" class="screen">
+            <p><b>Question 4</b></p>
+            <p>What do the lines describing the narrator standing "motionless, dumbfounded and dazzled" reveal?</p>
+            <div class="options" id="options-q4">
+                <label><input type="radio" name="q4" value="A"> A. The narrator surprisingly survives the attack.</label>
+                <label><input type="radio" name="q4" value="B"> B. Everyone on earth has perished in the fire.</label>
+                <label><input type="radio" name="q4" value="C"> C. The narrator is ready to strike back at the Martians.</label>
+                <label><input type="radio" name="q4" value="D"> D. The Martians have left behind a new earth the narrator embraces.</label>
+            </div>
+            <div id="rat-q4" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q5" class="screen">
+            <p><b>Question 5</b></p>
+            <p>What is most likely a central idea of the passage?</p>
+            <div class="options" id="options-q5">
+                <label><input type="radio" name="q5" value="A"> A. Humans have a sense that something bad is coming and should not trust the Martians.</label>
+                <label><input type="radio" name="q5" value="B"> B. The fear caused by the invasion has caused all people to unite.</label>
+                <label><input type="radio" name="q5" value="C"> C. People are curious about the mysterious visitors.</label>
+                <label><input type="radio" name="q5" value="D"> D. Before approaching the pit, humans hold a summit to decide the best move.</label>
+            </div>
+            <div id="rat-q5" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q6" class="screen">
+            <p><b>Question 6</b></p>
+            <p>Which sentence from the text most strongly supports the correct answer to Question 5?</p>
+            <div class="options" id="options-q6">
+                <label><input type="radio" name="q6" value="A"> A. "The crowd far away... seemed to grow, and I heard now a faint murmur from it."</label>
+                <label><input type="radio" name="q6" value="B"> B. "Then, by the light of their own destruction, I saw them staggering and falling..."</label>
+                <label><input type="radio" name="q6" value="C"> C. "There was scarcely an intimation of movement from the pit."</label>
+                <label><input type="radio" name="q6" value="D"> D. "But it was scarcely a time for articulate conversation."</label>
+            </div>
+            <div id="rat-q6" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q7" class="screen">
+            <p><b>Question 7</b></p>
+            <p>Which of the following inferences is best supported regarding the narrator's state of mind?</p>
+            <div class="options" id="options-q7">
+                <label><input type="radio" name="q7" value="A"> A. Humans cannot take their eyes off the Martians because they are beautiful.</label>
+                <label><input type="radio" name="q7" value="B"> B. The narrator is in awe and unsure if he should be afraid.</label>
+                <label><input type="radio" name="q7" value="C"> C. The Martians have given no indication of mental capacity.</label>
+                <label><input type="radio" name="q7" value="D"> D. The narrator would like to leave Earth with the Martians.</label>
+            </div>
+            <div id="rat-q7" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q8" class="screen">
+            <p><b>Question 8</b></p>
+            <p>Which statement from the text most strongly supports the correct answer to Question 7?</p>
+            <div class="options" id="options-q8">
+                <label><input type="radio" name="q8" value="A"> A. “I began walking... seeking some point of vantage...”</label>
+                <label><input type="radio" name="q8" value="B"> B. “’Did you see a man in the pit?’ I said; but he made no answer...”</label>
+                <label><input type="radio" name="q8" value="C"> C. “I did not dare to go back towards the pit, but I felt a passionate longing to peer into it.”</label>
+                <label><input type="radio" name="q8" value="D"> D. “’What ugly brutes!’ he said.”</label>
+            </div>
+            <div id="rat-q8" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-q9" class="screen">
+            <p><b>Question 9: Sequencing</b></p>
+            <p>Identify the correct chronological order of these events from the text:</p>
+            <div class="options" id="options-q9">
+                <label><input type="radio" name="q9" value="A"> A. Crowds approach -> Dome sinks -> Green smoke -> Flash of light/fire</label>
+                <label><input type="radio" name="q9" value="B"> B. Crowds approach -> Green smoke -> Flash of light/fire -> Dome sinks</label>
+                <label><input type="radio" name="q9" value="C"> C. Dome sinks -> Flash of light/fire -> Green smoke -> Crowds approach</label>
+                <label><input type="radio" name="q9" value="D"> D. Green smoke -> Flash of light/fire -> Crowds approach -> Dome sinks</label>
+            </div>
+            <div id="rat-q9" class="rationale feedback"></div>
+        </div>
+
+        <div id="screen-results" class="screen">
+            <div class="results-card">
+                <h2>Assessment Complete</h2>
+                <p id="score-text" style="font-size: 2.5rem; font-weight: bold; color: var(--sat-blue);"></p>
+                <p>Great job! You have completed the comprehensive quiz for "The Heat Ray."</p>
+                <button class="nav-btn" onclick="location.reload()">Restart Assessment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <button id="submitBtn" class="nav-btn" onclick="submitAnswer()">Submit Answer</button>
+    <button id="nextBtn" class="nav-btn" style="display:none;" onclick="nextQuestion()">Next Question</button>
+</footer>
+
+<script>
+    let currentQ = 1;
+    let score = 0;
+    const totalQ = 9;
+    const answers = { q1: "C", q2: "B", q3: "C", q4: "A", q5: "A", q6: "D", q7: "B", q8: "C", q9: "B" };
+    const rationales = {
+        q1: "Rationale: [cite: 36] The text explains the white flag was part of a 'Deputation' intended to signal that humans were 'intelligent' and peaceful.",
+        q2: "Rationale: [cite: 38] The text explicitly notes that these three were 'in this attempt at communication' with the Martians.",
+        q3: "Rationale: [cite: 14, 55] While fascinated, the narrator describes the event as 'death leaping from man to man,' shifting curiosity into visceral fear.",
+        q4: "Rationale: [cite: 67, 68] The text states that although the narrator was 'motionless,' the death ray passed over and 'spared' him.",
+        q5: "Rationale: [cite: 14, 21-23] The interaction with the neighbor and the narrator's own 'mental conflict' suggests a core theme of instinctive distrust of the unknown.",
+        q6: "Rationale: [cite: 22] The fact that it was 'scarcely a time for articulate conversation' underscores the heavy, fearful atmosphere mentioned in Question 5.",
+        q7: "Rationale: [cite: 14, 61] The narrator describes himself as a 'battleground of fear and curiosity,' often too 'stupefied' to move.",
+        q8: "Rationale: [cite: 15] This quote directly provides evidence of his conflicting mental state—the desire to look vs. the fear of returning to the pit.",
+        q9: "Rationale: [cite: 35, 40, 47, 65] The sequence follows the crowd's approach, then the green smoke puffs, then the flash of flame (Heat Ray), ending with the dome sinking back down."
+    };
+
+    function submitAnswer() {
+        const selected = document.querySelector(`input[name="q${currentQ}"]:checked`);
+        if (!selected) { alert("Please select an answer to continue."); return; }
+
+        const isCorrect = selected.value === answers[`q${currentQ}`];
+        if (isCorrect) score++;
+
+        const ratDiv = document.getElementById(`rat-q${currentQ}`);
+        ratDiv.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong><br>${rationales[`q${currentQ}`]}`;
+        ratDiv.style.display = 'block';
+
+        // Disable options
+        document.querySelectorAll(`#options-q${currentQ} input`).forEach(i => i.disabled = true);
+        
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+        document.getElementById(`screen-q${currentQ}`).classList.remove('active');
+        currentQ++;
+
+        if (currentQ <= totalQ) {
+            document.getElementById(`screen-q${currentQ}`).classList.add('active');
+            document.getElementById('q-tracker').innerText = `Question ${currentQ} of ${totalQ}`;
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('passage-container').style.display = 'none';
+        document.getElementById('q-tracker').style.display = 'none';
+        document.getElementById('screen-results').classList.add('active');
+        document.getElementById('score-text').innerText = `${score} / ${totalQ}`;
+        document.getElementById('nextBtn').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
